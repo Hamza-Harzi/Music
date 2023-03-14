@@ -52,6 +52,8 @@ export default {
     return {
       //store respense data in songs
       songs: [],
+      maxPerPage: 25,
+      pendingRequest: false,
     };
   },
   components: {
@@ -59,15 +61,61 @@ export default {
   },
   //request the data when the compent is created by using life cycle function
   async created() {
-    // i must use get func to take data from firebase
-    const snapshots = await songsCollection.get();
-    // loop document to push them in the array
-    snapshots.forEach((document) => {
-      this.songs.push({
-        docId: document.id,
-        ...document.data(),
+    // infinite scrolling "bich kol manzide 8oneya fi l base de donner nal9aha fi lhome"
+    this.getSongs();
+    // the scroll event is emitted whenever the user is scroll
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  // we use yhis function to remove EventListener
+  beforeUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  },
+  methods: {
+    async handleScroll() {
+      const { scrollTop, offsetHeight } = document.documentElement;
+      const { innerHeight } = window;
+      const bottomOfWindow =
+        Math.round(scrollTop) + innerHeight === offsetHeight;
+
+      if (bottomOfWindow) {
+        this.getSongs();
+      }
+    },
+    async getSongs() {
+      // i must use get func to take data from firebase
+      if (this.pendingRequest) {
+        // if this property is set to true we will stop further request
+        return;
+      }
+
+      this.pendingRequest = true;
+      let snapshots;
+      if (this.songs.length) {
+        const lastDoc = await songsCollection
+          .doc(this.songs[this.songs.length - 1].docId)
+          .get();
+
+        snapshots = await songsCollection
+          .orderBy("modified_name")
+          .startAfter(lastDoc)
+          .limit(this.maxPerPage) // limiting how much data we are requesting
+          .get();
+      } else {
+        snapshots = await songsCollection
+          .orderBy("modified_name")
+          .limit(this.maxPerPage) // limiting how much data we are requesting
+          .get();
+      }
+
+      // loop document to push them in the array
+      snapshots.forEach((document) => {
+        this.songs.push({
+          docId: document.id,
+          ...document.data(),
+        });
       });
-    });
+      this.pendingRequest = false;
+    },
   },
 };
 </script>
