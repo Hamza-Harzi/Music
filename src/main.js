@@ -9,6 +9,11 @@ import Icon from "./directives/icon";
 
 import "./assets/base.css";
 import "./assets/main.css";
+import i18n from "./includes/i18n";
+import { registerSW } from "virtual:pwa-register";
+import GlobalComponents from "./includes/_globals";
+
+registerSW({ immediate: true }); // bich t5ademlek lapp mte3ek w todhhorlek hatta ken mafamech connexion
 
 let app;
 auth.onAuthStateChanged(() => {
@@ -18,6 +23,8 @@ auth.onAuthStateChanged(() => {
     app.use(createPinia());
     app.use(router);
     app.use(VeeValidatePlugin);
+    app.use(i18n);
+    app.use(GlobalComponents);
     app.directive("icon", Icon);
 
     app.mount("#app");

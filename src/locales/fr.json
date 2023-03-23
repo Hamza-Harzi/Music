@@ -1,0 +1,24 @@
+{
+    "home": {
+        
+        "listen":"Écoutez de la bonne musique!",
+        "app_description":"Il s'agit d'un service numérique de musique, de podcast et de vidéo qui vous donne accès à des millions de chansons et à d'autres contenus de créateurs du monde entier.",
+        "hey":"Chansons"
+    },
+    "manage": {
+        "my_songs":"Mes chansons"
+        
+        
+    },
+    "upload": {
+        
+        "upload":"Télécharger"
+    },
+    "header": {
+        "manage":"Gérer",
+        "about":"À propos",
+        "logout":"Se déconnecter",
+        "login":"Register",
+        "music":"Chansons"
+    }
+}

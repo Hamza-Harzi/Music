@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white rounded border border-gray-200 relative flex flex-col">
     <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
-      <span class="card-title">Upload</span>
+      <span class="card-title">{{ $t("upload.upload") }}</span>
       <i class="fas fa-upload float-right text-green-400 text-2xl"></i>
     </div>
     <div class="p-6">
@@ -45,6 +45,7 @@
 import { storage, auth, songsCollection } from "@/includes/firebase";
 export default {
   name: "Upload",
+  // i18n.locale = 'fr';
   //props to passing data from the parent component "manage.vue" to this child component
   props: ["addSong"],
 
@@ -65,6 +66,19 @@ export default {
 
       files.forEach((file) => {
         if (file.type !== "audio/mpeg") {
+          return;
+        }
+
+        if (!navigator.onLine) {
+          // if they're online we will let them proceed with uploading a file if they are offline we will output an error to let them know they can't upload files in the conditionl
+          this.uploads.push({
+            task: {},
+            current_progress: 100,
+            name: file.name,
+            variant: "bg-red-400",
+            icon: "fas fa-times",
+            text_class: "text-red-400",
+          });
           return;
         }
 

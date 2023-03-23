@@ -18,6 +18,10 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 
+db.enablePersistence().catch((error) => {
+  console.log(`Firebase persistence error ${error.code}`);
+}); //the enable persistence function will tell Firebase to keep a copy of the database on the user's browser if the user disconnects from the internet the SDK we will switch to using the local copy of the user's machine
+
 const usersCollection = db.collection("users");
 const songsCollection = db.collection("songs");
 const commentsCollection = db.collection("comments");

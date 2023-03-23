@@ -1,0 +1,33 @@
+{
+    "home": {
+        
+        "listen":"Listen to Great Music!",
+        "app_description":"This is a digital music, podcast, and video service that gives you access to millions of songs and other content from creators all over the world.",
+        "hey":"Songs"
+    },
+    "song" : {
+        "comment_count": "No comments | 1 comment | {count} comments"
+    },
+    "register": {
+"accept": " I accept Music's {0}",
+"tos": "Terms of Services"
+    },
+    "manage": {
+        "my_songs":"My songs"
+        
+        
+    },
+    "upload": {
+        
+        "upload":"Upload"
+    },
+    "header": {
+        "manage":"Manage",
+        "about":"About",
+        "logout":"Logout",
+        "login":"Login",
+        "music":"Music"
+
+    }
+
+}
