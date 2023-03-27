@@ -1,4 +1,5 @@
-import _ from "lodash";
+import upperFirst from "lodash/upperFirst";
+import camelCase from "lodash/camelCase";
 
 export default {
   install(app) {
@@ -10,8 +11,8 @@ export default {
     // this function will convert each property to an array where the first item is in the array contains the key
     // the first item will have the file path and the module item will store the componnets
     Object.entries(baseComponents).forEach(([path, module]) => {
-      const componentName = _.upperFirst(
-        _.camelCase(
+      const componentName = upperFirst(
+        camelCase(
           path
             .split("/")
             .pop()

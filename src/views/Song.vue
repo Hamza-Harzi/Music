@@ -9,6 +9,7 @@
       <div class="container mx-auto flex items-center">
         <!-- Play/Pause Button -->
         <button
+          id="play - btn"
           @click.prevent="
             () => {
               newSong(song);
@@ -149,22 +150,24 @@ export default {
     },
   },
   //will make the requests when component is created we can do that by defining the created life cycle function in the component
-  async created() {
-    const docSnapshot = await songsCollection.doc(this.$route.params.id).get();
+  async beforeRouteEnter(to, from, next) {
+    const docSnapshot = await songsCollection.doc(to.params.id).get();
+    //the "to" object holds properties related to the current route being visited
+    next((vm) => {
+      // idha l padh ma5demech wela majech id wela mich mawjoud hezni lil page home
+      if (!docSnapshot.exists) {
+        vm.$route.push({ name: "home" });
+        return;
+      }
 
-    // idha l padh ma5demech wela majech id wela mich mawjoud hezni lil page home
-    if (!docSnapshot.exists) {
-      this.$route.push({ name: "home" });
-      return;
-    }
+      // query parameter mta3 l comment loula mich kima mta3 thenya ya hot loula ya thenya
+      const { sort } = vm.$route.query;
+      vm.sort = sort === "1" || sort === "2" ? sort : "1";
 
-    // query parameter mta3 l comment loula mich kima mta3 thenya ya hot loula ya thenya
-    const { sort } = this.$route.query;
-    this.sort = sort === "1" || sort === "2" ? sort : "1";
-
-    // bich n5azno data li jetna fi song object 3la tri9 data()
-    this.song = docSnapshot.data();
-    this.getComments();
+      // bich n5azno data li jetna fi song object 3la tri9 data()
+      vm.song = docSnapshot.data();
+      vm.getComments();
+    });
   },
   methods: {
     // the context object containts methods and properties about our form

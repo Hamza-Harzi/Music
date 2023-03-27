@@ -6,12 +6,15 @@ import router from "./router";
 import VeeValidatePlugin from "./includes/validation";
 import { auth } from "./includes/firebase";
 import Icon from "./directives/icon";
-
+import ProgessBar from "./includes/progress-bar";
 import "./assets/base.css";
 import "./assets/main.css";
 import i18n from "./includes/i18n";
 import { registerSW } from "virtual:pwa-register";
 import GlobalComponents from "./includes/_globals";
+import "nprogress/nprogress.css";
+
+ProgessBar(router);
 
 registerSW({ immediate: true }); // bich t5ademlek lapp mte3ek w todhhorlek hatta ken mafamech connexion
 

@@ -2,9 +2,13 @@ import { fileURLToPath, URL } from "node:url";
 import { VitePWA } from "vite-plugin-pwa";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+//import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  test: {
+    globals: true,
+  },
   plugins: [
     vue(),
     VitePWA({
@@ -28,6 +32,7 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,png,jpg,}"], //bich t7ot l7ajet li inti t7eb t5ademhom ki tabda offligne
       },
     }),
+    //visualizer({ open: true }),
   ],
   resolve: {
     alias: {
